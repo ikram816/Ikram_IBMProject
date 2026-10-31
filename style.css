@@ -1,0 +1,476 @@
+/* ============================================================
+   Smart Finance Dashboard — style.css
+   Theme: Dark Mode Premium
+   Colors: bg #0f172a | card #1e293b | sky #38bdf8 | green #10b981
+   ============================================================ */
+
+/* ── CSS Custom Properties ─────────────────────────────────── */
+:root {
+  --bg:          #0f172a;
+  --card:        #1e293b;
+  --border:      #334155;
+  --text:        #f1f5f9;
+  --muted:       #94a3b8;
+  --sky:         #38bdf8;
+  --green:       #10b981;
+  --amber:       #f59e0b;
+  --red:         #f43f5e;
+  --sidebar-w:   240px;
+  --topbar-h:    68px;
+  --radius:      12px;
+  --transition:  0.22s ease;
+}
+
+/* ── Reset / Base ───────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
+
+/* ── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--card);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  z-index: 100;
+  transition: transform var(--transition);
+}
+
+/* Logo */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 28px;
+  border-bottom: 1px solid var(--border);
+}
+.logo-icon { font-size: 1.5rem; }
+.logo-text  { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.5px; color: var(--sky); }
+
+/* Nav */
+.sidebar-nav {
+  flex: 1;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius);
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background var(--transition), color var(--transition);
+  cursor: pointer;
+}
+.nav-item:hover { background: rgba(56,189,248,.1); color: var(--sky); }
+.nav-item.active { background: rgba(56,189,248,.15); color: var(--sky); }
+.nav-icon  { font-size: 1.1rem; min-width: 22px; text-align: center; }
+.nav-label { white-space: nowrap; }
+
+/* Sidebar Footer */
+.sidebar-footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border); }
+.user-mini { display: flex; align-items: center; gap: 10px; padding: 8px; }
+.avatar-sm {
+  width: 34px; height: 34px;
+  background: linear-gradient(135deg, var(--sky), #6366f1);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700; color: #fff;
+  flex-shrink: 0;
+}
+.user-mini-info { display: flex; flex-direction: column; overflow: hidden; }
+.user-mini-name { font-size: 0.82rem; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-mini-role  { font-size: 0.72rem; color: var(--green); font-weight: 500; }
+
+/* ============================================================
+   MAIN WRAPPER / TOPBAR
+   ============================================================ */
+.main-wrapper {
+  margin-left: var(--sidebar-w);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left var(--transition);
+}
+
+/* Top Bar */
+.topbar {
+  position: sticky; top: 0;
+  height: var(--topbar-h);
+  background: rgba(15,23,42,.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 24px;
+  z-index: 90;
+}
+.topbar-title h1 { font-size: 1.15rem; font-weight: 700; }
+.topbar-title p  { font-size: 0.78rem; color: var(--muted); margin-top: 1px; }
+.topbar-actions  { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+
+/* Time Filter */
+.time-filter { display: flex; gap: 6px; }
+.filter-btn {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.78rem; font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.filter-btn:hover  { border-color: var(--sky); color: var(--sky); }
+.filter-btn.active { background: var(--sky); border-color: var(--sky); color: #0f172a; }
+
+/* Icon Button */
+.icon-btn {
+  position: relative;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 7px 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--muted);
+  transition: border-color var(--transition), color var(--transition);
+}
+.icon-btn:hover { border-color: var(--sky); color: var(--sky); }
+.notif-badge {
+  position: absolute; top: -5px; right: -5px;
+  background: var(--red); color: #fff;
+  font-size: 0.6rem; font-weight: 700;
+  border-radius: 50%; width: 16px; height: 16px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* User Avatar (topbar) */
+.user-avatar {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--sky), #6366f1);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem; font-weight: 700; color: #fff;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Hamburger (mobile) */
+.menu-toggle {
+  display: none;
+  flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 4px;
+}
+.menu-toggle span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all var(--transition); }
+
+/* ============================================================
+   PAGE CONTENT
+   ============================================================ */
+.page-content {
+  padding: 28px 28px 48px;
+  display: flex; flex-direction: column; gap: 24px;
+  flex: 1;
+}
+
+/* ── KPI Cards ──────────────────────────────────────────────── */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.kpi-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex; align-items: flex-start; gap: 14px;
+  transition: transform var(--transition), box-shadow var(--transition);
+  cursor: default;
+}
+.kpi-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(0,0,0,.4);
+}
+.kpi-icon {
+  font-size: 1.5rem;
+  width: 48px; height: 48px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 10px;
+}
+.kpi-icon--sky   { background: rgba(56,189,248,.15); }
+.kpi-icon--green { background: rgba(16,185,129,.15); }
+.kpi-icon--red   { background: rgba(244,63,94,.15);  }
+.kpi-icon--amber { background: rgba(245,158,11,.15); }
+
+.kpi-body { flex: 1; min-width: 0; }
+.kpi-label { font-size: 0.75rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: .5px; }
+.kpi-value { font-size: 1.55rem; font-weight: 700; margin: 4px 0 6px; letter-spacing: -0.5px; color: var(--text); }
+.kpi-change { font-size: 0.75rem; font-weight: 500; }
+.kpi-change.positive { color: var(--green); }
+.kpi-change.negative { color: var(--red);   }
+
+/* Savings Bar */
+.savings-bar-wrap {
+  height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; margin-top: 8px;
+}
+.savings-bar {
+  height: 100%; background: linear-gradient(90deg, var(--sky), var(--green));
+  border-radius: 99px; transition: width 0.6s ease;
+}
+
+/* ── Financial Health ───────────────────────────────────────── */
+.health-section {}
+.health-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.health-card.warn  { border-color: var(--amber); background: rgba(245,158,11,.08); }
+.health-card.alert { border-color: var(--red);   background: rgba(244,63,94,.08); }
+.health-icon { font-size: 2rem; flex-shrink: 0; }
+.health-body { flex: 1; }
+.health-title { font-size: 1rem; font-weight: 700; }
+.health-msg   { font-size: 0.8rem; color: var(--muted); margin-top: 3px; }
+
+/* Score Ring */
+.health-score { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
+.score-ring   { position: relative; width: 64px; height: 64px; }
+.score-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring-bg   { fill: none; stroke: var(--border); stroke-width: 5; }
+.ring-fill { fill: none; stroke: var(--green); stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 0.6s ease; }
+.score-num {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 700;
+}
+.score-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+
+/* ── Charts Grid ────────────────────────────────────────────── */
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 18px;
+}
+.chart-full-row {}
+.chart-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+}
+.chart-header {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 18px;
+}
+.chart-title    { font-size: 0.95rem; font-weight: 700; }
+.chart-subtitle { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.chart-legend   { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--muted); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-sky { background: var(--sky); }
+.dot-red { background: var(--red); }
+.ml-3 { margin-left: 12px; }
+
+.chart-canvas-wrap { position: relative; }
+.chart-canvas-wrap canvas { max-height: 240px; }
+.doughnut-wrap canvas { max-height: 200px; margin: auto; display: block; }
+
+/* Donut Legend */
+.donut-legend { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px 16px; }
+.donut-legend li {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 0.75rem; color: var(--muted);
+}
+.donut-legend li span.dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.donut-legend li strong { color: var(--text); }
+
+/* ── Transactions ───────────────────────────────────────────── */
+.transactions-section {}
+.transactions-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.tx-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 22px 0;
+  flex-wrap: wrap; gap: 12px;
+}
+.tx-title    { font-size: 0.95rem; font-weight: 700; }
+.tx-subtitle { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+.tx-controls { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.tx-search-wrap {
+  position: relative;
+  display: flex; align-items: center;
+}
+.search-icon { position: absolute; left: 10px; font-size: 0.8rem; pointer-events: none; }
+.tx-search {
+  padding: 7px 12px 7px 30px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+  color: var(--text); font-size: 0.82rem; width: 200px;
+  transition: border-color var(--transition);
+  outline: none;
+}
+.tx-search:focus { border-color: var(--sky); }
+.tx-filter-select {
+  padding: 7px 12px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
+  color: var(--text); font-size: 0.82rem;
+  cursor: pointer; outline: none;
+  transition: border-color var(--transition);
+}
+.tx-filter-select:focus { border-color: var(--sky); }
+
+/* Table */
+.tx-table-wrap { overflow-x: auto; margin-top: 14px; }
+.tx-table { width: 100%; border-collapse: collapse; }
+.tx-table thead tr {
+  border-bottom: 1px solid var(--border);
+  background: rgba(255,255,255,.03);
+}
+.tx-table th {
+  padding: 10px 22px;
+  text-align: left;
+  font-size: 0.72rem; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .5px;
+  white-space: nowrap;
+}
+.tx-table td {
+  padding: 13px 22px;
+  font-size: 0.84rem;
+  border-bottom: 1px solid rgba(51,65,85,.5);
+  transition: background var(--transition);
+}
+.tx-table tbody tr:hover td { background: rgba(56,189,248,.05); }
+.tx-table tbody tr:last-child td { border-bottom: none; }
+
+/* Transaction Name Cell */
+.tx-name-cell { display: flex; align-items: center; gap: 10px; }
+.tx-emoji { font-size: 1.2rem; }
+.tx-name  { font-weight: 500; }
+.tx-desc  { font-size: 0.73rem; color: var(--muted); }
+
+/* Category Badge */
+.badge {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.7rem; font-weight: 600;
+  white-space: nowrap;
+}
+.badge-food    { background: rgba(245,158,11,.15); color: var(--amber); }
+.badge-housing { background: rgba(99,102,241,.15);  color: #818cf8; }
+.badge-transport  { background: rgba(56,189,248,.15); color: var(--sky); }
+.badge-entertainment { background: rgba(244,63,94,.15); color: var(--red); }
+.badge-utilities { background: rgba(148,163,184,.15); color: var(--muted); }
+.badge-income  { background: rgba(16,185,129,.15); color: var(--green); }
+.badge-savings { background: rgba(56,189,248,.12); color: var(--sky); }
+
+/* Amount */
+.amount-pos { color: var(--green); font-weight: 600; }
+.amount-neg { color: var(--red);   font-weight: 600; }
+
+/* Status Pill */
+.status-pill {
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 0.7rem; font-weight: 600;
+}
+.status-completed { background: rgba(16,185,129,.15); color: var(--green); }
+.status-pending   { background: rgba(245,158,11,.15); color: var(--amber); }
+.status-failed    { background: rgba(244,63,94,.15);  color: var(--red); }
+
+/* Empty state */
+.tx-empty {
+  padding: 28px; text-align: center;
+  color: var(--muted); font-size: 0.85rem;
+}
+.hidden { display: none !important; }
+
+/* ============================================================
+   SIDEBAR OVERLAY (mobile)
+   ============================================================ */
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 99;
+}
+.sidebar-overlay.active { display: block; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 1280px) {
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 1024px) {
+  .charts-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .main-wrapper { margin-left: 0; }
+  .menu-toggle { display: flex; }
+  .time-filter { display: none; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .page-content { padding: 16px 14px 32px; }
+  .topbar { padding: 0 14px; }
+  .tx-header { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 480px) {
+  .kpi-grid { grid-template-columns: 1fr; }
+  .kpi-value { font-size: 1.3rem; }
+  .health-card { flex-wrap: wrap; }
+  .health-score { display: none; }
+  .tx-search { width: 150px; }
+}
+
+/* ============================================================
+   ENTRY ANIMATION
+   ============================================================ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.kpi-card     { animation: fadeUp 0.4s ease both; }
+.kpi-card:nth-child(1) { animation-delay: .05s; }
+.kpi-card:nth-child(2) { animation-delay: .10s; }
+.kpi-card:nth-child(3) { animation-delay: .15s; }
+.kpi-card:nth-child(4) { animation-delay: .20s; }
+.chart-card   { animation: fadeUp 0.4s ease .25s both; }
+.health-card  { animation: fadeUp 0.4s ease .22s both; }
+.transactions-card { animation: fadeUp 0.4s ease .35s both; }

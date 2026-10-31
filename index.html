@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Finance Dashboard</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            navy:   { DEFAULT: '#0f172a', card: '#1e293b', border: '#334155' },
+            accent: { sky: '#38bdf8', green: '#10b981', amber: '#f59e0b', red: '#f43f5e' }
+          },
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+        }
+      }
+    }
+  </script>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
+  <!-- Google Font: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="dark bg-[#0f172a] text-slate-100 font-sans">
+
+  <!-- ========== SIDEBAR ========== -->
+  <aside id="sidebar" class="sidebar">
+    <!-- Logo -->
+    <div class="sidebar-logo">
+      <span class="logo-icon">💎</span>
+      <span class="logo-text">FinanceIQ</span>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-page="dashboard">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-page="analytics">
+        <span class="nav-icon">📈</span>
+        <span class="nav-label">Analytics</span>
+      </a>
+      <a href="#" class="nav-item" data-page="transactions">
+        <span class="nav-icon">💳</span>
+        <span class="nav-label">Transactions</span>
+      </a>
+      <a href="#" class="nav-item" data-page="settings">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Settings</span>
+      </a>
+    </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer">
+      <div class="user-mini">
+        <div class="avatar-sm">AJ</div>
+        <div class="user-mini-info">
+          <span class="user-mini-name">Alex Johnson</span>
+          <span class="user-mini-role">Premium</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <div class="main-wrapper">
+
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <!-- Hamburger (mobile) -->
+      <button id="menuToggle" class="menu-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Page Title -->
+      <div class="topbar-title">
+        <h1 id="pageTitle">Dashboard</h1>
+        <p id="pageSubtitle">Welcome back, Alex 👋</p>
+      </div>
+
+      <!-- Top-right Actions -->
+      <div class="topbar-actions">
+        <!-- Time Filter -->
+        <div class="time-filter">
+          <button class="filter-btn active" data-period="all">All Time</button>
+          <button class="filter-btn" data-period="month">This Month</button>
+          <button class="filter-btn" data-period="last">Last Month</button>
+          <button class="filter-btn" data-period="year">This Year</button>
+        </div>
+
+        <!-- Notifications -->
+        <button class="icon-btn" id="notifBtn" aria-label="Notifications">
+          🔔 <span class="notif-badge">3</span>
+        </button>
+
+        <!-- User Avatar -->
+        <div class="user-avatar" title="Alex Johnson">AJ</div>
+      </div>
+    </header>
+
+    <!-- DASHBOARD PAGE -->
+    <main id="pageContent" class="page-content">
+
+      <!-- ── KPI CARDS ── -->
+      <section class="kpi-grid" aria-label="Key Performance Indicators">
+        <div class="kpi-card" id="kpi-balance">
+          <div class="kpi-icon kpi-icon--sky">💰</div>
+          <div class="kpi-body">
+            <p class="kpi-label">Total Balance</p>
+            <h2 class="kpi-value" id="val-balance">$12,450.00</h2>
+            <span class="kpi-change positive">▲ 3.2% vs last month</span>
+          </div>
+        </div>
+
+        <div class="kpi-card" id="kpi-income">
+          <div class="kpi-icon kpi-icon--green">📥</div>
+          <div class="kpi-body">
+            <p class="kpi-label">Monthly Income</p>
+            <h2 class="kpi-value" id="val-income">$4,800.00</h2>
+            <span class="kpi-change positive">▲ 5.0% vs last month</span>
+          </div>
+        </div>
+
+        <div class="kpi-card" id="kpi-expense">
+          <div class="kpi-icon kpi-icon--red">📤</div>
+          <div class="kpi-body">
+            <p class="kpi-label">Monthly Expenses</p>
+            <h2 class="kpi-value" id="val-expense">$2,150.00</h2>
+            <span class="kpi-change negative">▼ 1.5% vs last month</span>
+          </div>
+        </div>
+
+        <div class="kpi-card" id="kpi-savings">
+          <div class="kpi-icon kpi-icon--amber">🎯</div>
+          <div class="kpi-body">
+            <p class="kpi-label">Savings Goal</p>
+            <h2 class="kpi-value" id="val-savings">78%</h2>
+            <div class="savings-bar-wrap">
+              <div class="savings-bar" id="savingsBar" style="width:78%"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── FINANCIAL HEALTH INDICATOR ── -->
+      <section class="health-section" aria-label="Financial Health">
+        <div class="health-card" id="healthCard">
+          <div class="health-icon" id="healthIcon">✅</div>
+          <div class="health-body">
+            <h3 class="health-title" id="healthTitle">Financial Health: Good</h3>
+            <p class="health-msg" id="healthMsg">Your expense ratio is 44.8% of income. Keep it below 50% to stay on track!</p>
+          </div>
+          <div class="health-score">
+            <div class="score-ring" id="scoreRing">
+              <svg viewBox="0 0 60 60">
+                <circle cx="30" cy="30" r="24" class="ring-bg"/>
+                <circle cx="30" cy="30" r="24" class="ring-fill" id="ringFill" stroke-dasharray="150.8" stroke-dashoffset="33.2"/>
+              </svg>
+              <span class="score-num" id="scoreNum">78</span>
+            </div>
+            <p class="score-label">Score</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CHARTS ROW ── -->
+      <section class="charts-grid" aria-label="Financial Charts">
+
+        <!-- Income vs Expense Trend -->
+        <div class="chart-card chart-large">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">Income vs Expense Trend</h3>
+              <p class="chart-subtitle">Monthly overview — 2024</p>
+            </div>
+            <div class="chart-legend">
+              <span class="legend-dot dot-sky"></span><span>Income</span>
+              <span class="legend-dot dot-red ml-3"></span><span>Expense</span>
+            </div>
+          </div>
+          <div class="chart-canvas-wrap">
+            <canvas id="trendChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Doughnut: Expense Breakdown -->
+        <div class="chart-card chart-small">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">Expense Breakdown</h3>
+              <p class="chart-subtitle">By category this month</p>
+            </div>
+          </div>
+          <div class="chart-canvas-wrap doughnut-wrap">
+            <canvas id="doughnutChart"></canvas>
+          </div>
+          <ul class="donut-legend" id="donutLegend"></ul>
+        </div>
+
+      </section>
+
+      <!-- Budget Bar Chart -->
+      <section class="chart-full-row" aria-label="Budget Allocation">
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <h3 class="chart-title">Budget Allocation vs Actual Spent</h3>
+              <p class="chart-subtitle">Monthly budget breakdown by category</p>
+            </div>
+          </div>
+          <div class="chart-canvas-wrap">
+            <canvas id="budgetChart"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── TRANSACTIONS TABLE ── -->
+      <section class="transactions-section" aria-label="Recent Transactions">
+        <div class="transactions-card">
+          <div class="tx-header">
+            <div>
+              <h3 class="tx-title">Recent Transactions</h3>
+              <p class="tx-subtitle">Last 10 transactions</p>
+            </div>
+            <div class="tx-controls">
+              <!-- Search -->
+              <div class="tx-search-wrap">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="txSearch" class="tx-search" placeholder="Search transactions…" />
+              </div>
+              <!-- Category Filter -->
+              <select id="txCatFilter" class="tx-filter-select">
+                <option value="">All Categories</option>
+                <option value="Food">Food</option>
+                <option value="Housing">Housing</option>
+                <option value="Transport">Transport</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Utilities">Utilities</option>
+                <option value="Income">Income</option>
+                <option value="Savings">Savings</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="tx-table-wrap">
+            <table class="tx-table">
+              <thead>
+                <tr>
+                  <th>Transaction</th>
+                  <th>Category</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="txTableBody"></tbody>
+            </table>
+          </div>
+          <p id="txEmpty" class="tx-empty hidden">No transactions found.</p>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- end .main-wrapper -->
+
+  <!-- Overlay (mobile sidebar) -->
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <!-- Custom Script -->
+  <script src="script.js"></script>
+</body>
+</html>
